@@ -6,8 +6,31 @@ const LaunchRequestHandler = {
     return request.type === 'LaunchRequest'
   },
   handle(handlerInput) {
+    if(supportsDisplay(handlerInput)) {
+      const image = new Alexa.ImageHelper()
+        .addImageInstance('https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png')
+        .getImage()
+
+      const primaryText = new Alexa.RichTextContentHelper()
+        .withPrimaryText('ありたそのアイコンです')
+        .getTextContent()
+
+      handlerInput.responseBuilder.addRenderTemplateDirective({
+        type: 'BodyTemplate1',
+        token: 'string',
+        backButton: 'HIDDEN',
+        backgroundImage: image,
+        title: 'alitaso-slot',
+        textContent: primaryText
+      })
+
+      return handlerInput.responseBuilder
+        .speak(WELCOME_MESSAGE)
+        .getResponse()
+    }
+
     return handlerInput.responseBuilder
-      .speak(WELCOME_MESSAGE)
+      .speak('ディスプレイ未対応です')
       .getResponse()
   }
 }
@@ -88,3 +111,8 @@ exports.handler = skillBuilder
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()
+
+function supportsDisplay(handlerInput) {
+  const context = handlerInput.requestEnvelope.context
+  return context.System.device.supportedInterfaces.Display
+}
