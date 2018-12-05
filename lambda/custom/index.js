@@ -12,6 +12,17 @@ const LaunchRequestHandler = {
   }
 }
 
+const SlotRequestHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request
+    return request.type === 'IntentRequest' && request.intent.name === 'SlotIntent'
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .getResponse()
+  }
+}
+
 const HelpHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request
@@ -70,6 +81,7 @@ const skillBuilder = Alexa.SkillBuilders.custom()
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
+    SlotRequestHandler,
     HelpHandler,
     ExitHandler,
     SessionEndedRequestHandler
