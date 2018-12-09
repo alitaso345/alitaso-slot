@@ -6,13 +6,27 @@ const LaunchRequestHandler = {
     return request.type === 'LaunchRequest'
   },
   handle(handlerInput) {
+    const datasources = {
+      data: {
+        type: "object",
+        properties: {
+          sources: [
+            { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png" },
+            { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon2.png" },
+            { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon3.png" },
+            { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon4.png" }
+          ]
+        }
+      }
+    }
+
     return handlerInput.responseBuilder
       .speak(WELCOME_MESSAGE)
       .addDirective({
         type: 'Alexa.Presentation.APL.RenderDocument',
         version: '1.0',
         document: require('./document.json'),
-        datasources: require('./datasources.json')
+        datasources: datasources
       })
       .getResponse()
   }

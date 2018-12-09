@@ -141,13 +141,13 @@
             "items": [
               {
                 "type": "Image",
-                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png",
+                "source": "${payload.data.properties.sources[0].url}",
                 "width": "50vw",
                 "height": "50vh"
               },
               {
                 "type": "Image",
-                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon2.png",
+                "source": "${payload.data.properties.sources[0].url}",
                 "width": "50vw",
                 "height": "50vh"
               }
@@ -164,13 +164,13 @@
             "items": [
               {
                 "type": "Image",
-                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon3.png",
+                "source": "${payload.data.properties.sources[0].url}",
                 "width": "50vw",
                 "height": "50vh"
               },
               {
                 "type": "Image",
-                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon4.png",
+                "source": "${payload.data.properties.sources[0].url}",
                 "width": "50vw",
                 "height": "50vh"
               }
@@ -194,14 +194,14 @@
             "items": [
               {
                 "type": "Image",
-                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png",
+                "source": "${payload.data.properties.sources[0].url}",
                 "width": "50vw",
                 "height": "50vh",
                 "scale": "best-fill"
               },
               {
                 "type": "Image",
-                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon2.png",
+                "source": "${payload.data.properties.sources[0].url}",
                 "width": "50vw",
                 "height": "50vh",
                 "scale": "best-fill"
@@ -219,14 +219,14 @@
             "items": [
               {
                 "type": "Image",
-                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon3.png",
+                "source": "${payload.data.properties.sources[0].url}",
                 "width": "50vw",
                 "height": "50vh",
                 "scale": "best-fill"
               },
               {
                 "type": "Image",
-                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon4.png",
+                "source": "${payload.data.properties.sources[0].url}",
                 "width": "50vw",
                 "height": "50vh",
                 "scale": "best-fill"
