@@ -1,0 +1,65 @@
+{
+  "bodyTemplate3Data": {
+    "type": "object",
+    "objectId": "bt3Sample",
+    "backgroundImage": {
+      "contentDescription": null,
+      "smallSourceUrl": null,
+      "largeSourceUrl": null,
+      "sources": [
+        {
+          "url": "https://d2o906d8ln7ui1.cloudfront.net/images/BT2_Background.png",
+          "size": "small",
+          "widthPixels": 0,
+          "heightPixels": 0
+        },
+        {
+          "url": "https://d2o906d8ln7ui1.cloudfront.net/images/BT2_Background.png",
+          "size": "large",
+          "widthPixels": 0,
+          "heightPixels": 0
+        }
+      ]
+    },
+    "title": "ありたそスロット",
+    "image": {
+      "contentDescription": null,
+      "smallSourceUrl": null,
+      "largeSourceUrl": null,
+      "sources": [
+        {
+          "url": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png",
+          "size": "small",
+          "widthPixels": 0,
+          "heightPixels": 0
+        },
+        {
+          "url": "https://d2o906d8ln7ui1.cloudfront.net/images/details_bt3.png",
+          "size": "large",
+          "widthPixels": 0,
+          "heightPixels": 0
+        }
+      ]
+    },
+    "textContent": {
+      "title": {
+        "type": "PlainText",
+        "text": "みんな幸せ"
+      },
+      "subtitle": {
+        "type": "PlainText",
+        "text": "みんなハッピーシステム"
+      },
+      "primaryText": {
+        "type": "PlainText",
+        "text": "夢みた。決闘する夢。"
+      },
+      "bulletPoint": {
+        "type": "PlainText",
+        "text": "夢みた。木登りする夢。"
+      }
+    },
+    "logoUrl": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png",
+    "hintText": "Try, \"Alexa, search for blue cheese\""
+  }
+}
