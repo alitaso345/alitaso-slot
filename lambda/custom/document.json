@@ -147,7 +147,7 @@
               },
               {
                 "type": "Image",
-                "source": "${payload.data.properties.sources[0].url}",
+                "source": "${payload.data.properties.sources[1].url}",
                 "width": "50vw",
                 "height": "50vh"
               }
@@ -164,13 +164,13 @@
             "items": [
               {
                 "type": "Image",
-                "source": "${payload.data.properties.sources[0].url}",
+                "source": "${payload.data.properties.sources[2].url}",
                 "width": "50vw",
                 "height": "50vh"
               },
               {
                 "type": "Image",
-                "source": "${payload.data.properties.sources[0].url}",
+                "source": "${payload.data.properties.sources[3].url}",
                 "width": "50vw",
                 "height": "50vh"
               }
@@ -201,7 +201,7 @@
               },
               {
                 "type": "Image",
-                "source": "${payload.data.properties.sources[0].url}",
+                "source": "${payload.data.properties.sources[1].url}",
                 "width": "50vw",
                 "height": "50vh",
                 "scale": "best-fill"
@@ -219,14 +219,14 @@
             "items": [
               {
                 "type": "Image",
-                "source": "${payload.data.properties.sources[0].url}",
+                "source": "${payload.data.properties.sources[2].url}",
                 "width": "50vw",
                 "height": "50vh",
                 "scale": "best-fill"
               },
               {
                 "type": "Image",
-                "source": "${payload.data.properties.sources[0].url}",
+                "source": "${payload.data.properties.sources[3].url}",
                 "width": "50vw",
                 "height": "50vh",
                 "scale": "best-fill"
