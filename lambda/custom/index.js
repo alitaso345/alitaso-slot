@@ -31,7 +31,6 @@ const SlotRequestHandler = {
         document: require('./document.json'),
         datasources: makeDatasources()
       })
-      .speak('もう一度スロットを回しますか？')
       .getResponse()
   }
 }
@@ -85,7 +84,7 @@ const ErrorHandler = {
   }
 }
 
-const WELCOME_MESSAGE = 'ありたそスロットへようこそ。もう一度スロットを回しますか？'
+const WELCOME_MESSAGE = 'ありたそスロットへようこそ。スロットを回します。'
 const HELP_MESSAGE = 'スロットを回して、と言ってみてください。スロットで遊ぶことができます。'
 const HELP_REPROMPT = 'ご用件はなんでしょうか？'
 
