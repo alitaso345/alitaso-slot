@@ -96,16 +96,23 @@ exports.handler = skillBuilder
   .lambda()
 
 function makeDatasources() {
+  const sources = [
+    { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png" },
+    { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon2.png" },
+    { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon3.png" },
+    { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon4.png" }
+  ]
+
+  const slotedSources = sources.map(_ => {
+    const index = Math.floor(Math.random() * sources.length)
+    return sources[index]
+  })
+
   const datasources = {
     data: {
       type: "object",
       properties: {
-        sources: [
-          { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png" },
-          { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon2.png" },
-          { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon3.png" },
-          { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon4.png" }
-        ]
+        sources: slotedSources
       }
     }
   }
