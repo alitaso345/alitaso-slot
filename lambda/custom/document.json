@@ -131,72 +131,48 @@
         "height": "100vh",
         "items": [
           {
-            "type": "Image",
-            "source": "${payload.bodyTemplate3Data.image.sources[0].url}",
-            "scale": "best-fill",
+            "type": "Container",
+            "direction": "row",
+            "paddingLeft": 0,
+            "paddingRight": 0,
+            "grow": 1,
             "width": "100vw",
-            "height": "100vh",
-            "position": "absolute",
-            "overlayColor": "rgba(0, 0, 0, 0.6)",
-            "scrim": true
+            "height": "50vh",
+            "items": [
+              {
+                "type": "Image",
+                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png",
+                "width": "50vw",
+                "height": "50vh"
+              },
+              {
+                "type": "Image",
+                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon2.png",
+                "width": "50vw",
+                "height": "50vh"
+              }
+            ]
           },
           {
-            "type": "ScrollView",
+            "type": "Container",
+            "direction": "row",
+            "paddingLeft": 0,
+            "paddingRight": 0,
+            "grow": 1,
             "width": "100vw",
-            "height": "100vh",
-            "item": [
+            "height": "50vh",
+            "items": [
               {
-                "type": "Container",
-                "direction": "column",
-                "alignItems": "center",
-                "paddingLeft": 30,
-                "paddingRight": 30,
-                "paddingBottom": 200,
-                "items": [
-                  {
-                    "type": "AlexaHeader",
-                    "headerAttributionImage": "${payload.bodyTemplate3Data.logoUrl}",
-                    "headerTitle": "${payload.bodyTemplate3Data.title}"
-                  },
-                  {
-                    "type": "Text",
-                    "text": "<b>ありたそスロット</b>",
-                    "style": "textStylePrimary",
-                    "color": "#4dd2ff",
-                    "width": "90vw",
-                    "textAlign": "center"
-                  },
-                  {
-                    "type": "Text",
-                    "text": "<b>${payload.bodyTemplate3Data.textContent.title.text}</b>",
-                    "style": "textStyleBody",
-                    "width": "90vw",
-                    "textAlign": "center"
-                  },
-                  {
-                    "type": "Text",
-                    "text": "${payload.bodyTemplate3Data.textContent.subtitle.text}",
-                    "style": "textStylePrimary",
-                    "width": "90vw",
-                    "textAlign": "center"
-                  },
-                  {
-                    "type": "Text",
-                    "text": "${payload.bodyTemplate3Data.textContent.primaryText.text}",
-                    "paddingTop": 40,
-                    "style": "textStylePrimary",
-                    "width": "90vw",
-                    "textAlign": "center"
-                  },
-                  {
-                    "type": "Text",
-                    "text": "${payload.bodyTemplate3Data.textContent.bulletPoint.text}",
-                    "paddingTop": 50,
-                    "style": "textStylePrimary",
-                    "width": "90vw",
-                    "textAlign": "center"
-                  }
-                ]
+                "type": "Image",
+                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon3.png",
+                "width": "50vw",
+                "height": "50vh"
+              },
+              {
+                "type": "Image",
+                "source": "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon4.png",
+                "width": "50vw",
+                "height": "50vh"
               }
             ]
           }
