@@ -8,12 +8,7 @@ const LaunchRequestHandler = {
   handle(handlerInput) {
     return handlerInput.responseBuilder
       .speak(WELCOME_MESSAGE)
-      .addDirective({
-        type: 'Alexa.Presentation.APL.RenderDocument',
-        version: '1.0',
-        document: require('./document.json'),
-        datasources: makeDatasources()
-      })
+      .reprompt(WELCOME_MESSAGE)
       .getResponse()
   }
 }
@@ -24,14 +19,22 @@ const SlotRequestHandler = {
     return request.type === 'IntentRequest' && request.intent.name === 'SlotIntent'
   },
   handle(handlerInput) {
-    return handlerInput.responseBuilder
-      .addDirective({
-        type: 'Alexa.Presentation.APL.RenderDocument',
-        version: '1.0',
-        document: require('./document.json'),
-        datasources: makeDatasources()
-      })
-      .getResponse()
+    if (supportDisplay(handlerInput)) {
+      return handlerInput.responseBuilder
+        .speak('よかったですね。もう一度スロットを回しますか？')
+        .addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./document.json'),
+          datasources: makeDatasources()
+        })
+        .withShouldEndSession(false)
+        .getResponse()
+    } else {
+      return handlerInput.responseBuilder
+        .speak('このスキルは画面なしのデバイスには対応していません')
+        .getResponse()
+    }
   }
 }
 
@@ -51,10 +54,12 @@ const HelpHandler = {
 const ExitHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request
-    return request.type === 'IntentRequest' && (request.intent.name === 'AMAZON.CancelIntent' || request.intent.name === 'AMAZON.StopIntent')
+    return request.type === 'IntentRequest' && (request.intent.name === 'AMAZON.CancelIntent' || request.intent.name === 'AMAZON.StopIntent' || request.intent.name === 'NoIntent')
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
+      .speak('さようなら。また遊びましょうね。')
+      .withSimpleCard('ありたそスロット', 'さようなら')
       .getResponse()
   }
 }
@@ -84,7 +89,7 @@ const ErrorHandler = {
   }
 }
 
-const WELCOME_MESSAGE = 'ありたそスロットへようこそ。スロットを回します。'
+const WELCOME_MESSAGE = 'ありたそスロットへようこそ。スロットを回しますか？'
 const HELP_MESSAGE = 'スロットを回して、と言ってみてください。スロットで遊ぶことができます。'
 const HELP_REPROMPT = 'ご用件はなんでしょうか？'
 
@@ -100,6 +105,18 @@ exports.handler = skillBuilder
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()
+
+function supportDisplay(handlerInput) {
+  const hasDisplay =
+    handlerInput.requestEnvelope &&
+    handlerInput.requestEnvelope.context &&
+    handlerInput.requestEnvelope.context.System &&
+    handlerInput.requestEnvelope.context.System.device &&
+    handlerInput.requestEnvelope.context.System.device.supportedInterfaces &&
+    handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display
+
+    return hasDisplay
+}
 
 function makeDatasources() {
   const sources = [
