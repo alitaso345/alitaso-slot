@@ -6,15 +6,21 @@ const LaunchRequestHandler = {
     return request.type === 'LaunchRequest'
   },
   handle(handlerInput) {
-    return handlerInput.responseBuilder
-      .speak(WELCOME_MESSAGE)
-      .addDirective({
-        type: 'Alexa.Presentation.APL.RenderDocument',
-        version: '1.0',
-        document: require('./document.json'),
-        datasources: makeDatasources()
-      })
-      .getResponse()
+    if (supportDisplay(handlerInput)) {
+      return handlerInput.responseBuilder
+        .speak(WELCOME_MESSAGE)
+        .addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./document.json'),
+          datasources: makeDatasources()
+        })
+        .getResponse()
+    } else {
+      return handlerInput.responseBuilder
+        .speak('このスキルは画面なしのデバイスには対応していません')
+        .getResponse()
+    }
   }
 }
 
@@ -100,6 +106,18 @@ exports.handler = skillBuilder
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()
+
+function supportDisplay(handlerInput) {
+  const hasDisplay =
+    handlerInput.requestEnvelope &&
+    handlerInput.requestEnvelope.context &&
+    handlerInput.requestEnvelope.context.System &&
+    handlerInput.requestEnvelope.context.System.device &&
+    handlerInput.requestEnvelope.context.System.device.supportedInterfaces &&
+    handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display
+
+    return hasDisplay
+}
 
 function makeDatasources() {
   const sources = [
