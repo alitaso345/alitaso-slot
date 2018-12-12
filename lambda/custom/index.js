@@ -6,22 +6,22 @@ const LaunchRequestHandler = {
     return request.type === 'LaunchRequest'
   },
   handle(handlerInput) {
-    if (supportDisplay(handlerInput)) {
-      return handlerInput.responseBuilder
-        .speak(WELCOME_MESSAGE)
-        .addDirective({
-          type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
-          document: require('./document.json'),
-          datasources: makeDatasources(handlerInput, true)
-        })
-        .withShouldEndSession(false)
-        .getResponse()
-    } else {
+    if (!supportDisplay(handlerInput)) {
       return handlerInput.responseBuilder
         .speak('このスキルは画面なしのデバイスには対応していません')
         .getResponse()
     }
+
+    return handlerInput.responseBuilder
+      .speak(WELCOME_MESSAGE)
+      .addDirective({
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document: require('./document.json'),
+        datasources: makeDatasources(handlerInput, true)
+      })
+      .withShouldEndSession(false)
+      .getResponse()
   }
 }
 
@@ -31,22 +31,22 @@ const SlotRequestHandler = {
     return request.type === 'IntentRequest' && (request.intent.name === 'SlotIntent' || request.intent.name === 'AMAZON.NextIntent')
   },
   handle(handlerInput) {
-    if (supportDisplay(handlerInput)) {
-      return handlerInput.responseBuilder
-        .speak('よかったですね。もう一度スロットを回しますか？')
-        .addDirective({
-          type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
-          document: require('./document.json'),
-          datasources: makeDatasources(handlerInput, false)
-        })
-        .withShouldEndSession(false)
-        .getResponse()
-    } else {
+    if (!supportDisplay(handlerInput)) {
       return handlerInput.responseBuilder
         .speak('このスキルは画面なしのデバイスには対応していません')
         .getResponse()
     }
+
+    return handlerInput.responseBuilder
+      .speak('よかったですね。もう一度スロットを回しますか？')
+      .addDirective({
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document: require('./document.json'),
+        datasources: makeDatasources(handlerInput, false)
+      })
+      .withShouldEndSession(false)
+      .getResponse()
   }
 }
 
@@ -56,30 +56,30 @@ const PreviousRequestHandler = {
     return request.type === 'IntentRequest' && request.intent.name === 'AMAZON.PreviousIntent'
   },
   handle(handlerInput) {
-    if (supportDisplay(handlerInput)) {
-      const attributes = handlerInput.attributesManager.getSessionAttributes()
-      if (!attributes.previousDatasources) {
-        return handlerInput.responseBuilder
-          .speak('スロット履歴がありません。スロットを回しますか？')
-          .reprompt('スロット履歴がありません。スロットを回しますか？')
-          .getResponse()
-      }
-      
-      return handlerInput.responseBuilder
-        .speak('前回のスロット履歴はこちらです。もう一度スロットを回しますか？')
-        .addDirective({
-          type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
-          document: require('./document.json'),
-          datasources: attributes.previousDatasources
-        })
-        .withShouldEndSession(false)
-        .getResponse()
-    } else {
+    if (!supportDisplay(handlerInput)) {
       return handlerInput.responseBuilder
         .speak('このスキルは画面なしのデバイスには対応していません')
         .getResponse()
     }
+
+    const attributes = handlerInput.attributesManager.getSessionAttributes()
+    if (!attributes.previousDatasources) {
+      return handlerInput.responseBuilder
+        .speak('スロット履歴がありません。スロットを回しますか？')
+        .reprompt('スロット履歴がありません。スロットを回しますか？')
+        .getResponse()
+    }
+
+    return handlerInput.responseBuilder
+      .speak('前回のスロット履歴はこちらです。もう一度スロットを回しますか？')
+      .addDirective({
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document: require('./document.json'),
+        datasources: attributes.previousDatasources
+      })
+      .withShouldEndSession(false)
+      .getResponse()
   }
 }
 
@@ -135,7 +135,7 @@ const ErrorHandler = {
 }
 
 const WELCOME_MESSAGE = 'ありたそスロットへようこそ。もう一度スロットを回しますか？'
-const HELP_MESSAGE = 'スロットを回して、と言ってみてください。スロットで遊ぶことができます。'
+const HELP_MESSAGE = 'スロットを回して、と言ってみてください。スロットで遊ぶことができます。なおこのスキルは画面のないデバイスには対応していません。'
 const HELP_REPROMPT = 'ご用件はなんでしょうか？'
 
 const skillBuilder = Alexa.SkillBuilders.custom()
