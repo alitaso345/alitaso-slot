@@ -16,7 +16,7 @@ const LaunchRequestHandler = {
 const SlotRequestHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request
-    return request.type === 'IntentRequest' && request.intent.name === 'SlotIntent'
+    return request.type === 'IntentRequest' && (request.intent.name === 'SlotIntent' || request.intent.name === 'AMAZON.NextIntent')
   },
   handle(handlerInput) {
     if (supportDisplay(handlerInput)) {
