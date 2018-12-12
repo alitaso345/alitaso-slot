@@ -105,6 +105,7 @@ const ExitHandler = {
     return handlerInput.responseBuilder
       .speak('さようなら。また遊びましょうね。')
       .withSimpleCard('ありたそスロット', 'さようなら')
+      .withShouldEndSession(true)
       .getResponse()
   }
 }
@@ -116,7 +117,7 @@ const SessionEndedRequestHandler = {
   },
   handle(handlerInput) {
     console.log(`The session ended: ${handlerInput.requestEnvelope.request.reason}`);
-    return handlerInput.responseBuilder.getResponse()
+    return handlerInput.responseBuilder.withShouldEndSession(true).getResponse()
   }
 }
 
@@ -130,6 +131,7 @@ const ErrorHandler = {
     return handlerInput.responseBuilder
       .speak('何を言っているのか理解できませんでした')
       .reprompt('何を言っているのか理解できませんでした')
+      .withShouldEndSession(true)
       .getResponse();
   }
 }
