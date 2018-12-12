@@ -6,10 +6,22 @@ const LaunchRequestHandler = {
     return request.type === 'LaunchRequest'
   },
   handle(handlerInput) {
-    return handlerInput.responseBuilder
-      .speak(WELCOME_MESSAGE)
-      .reprompt(WELCOME_MESSAGE)
-      .getResponse()
+    if (supportDisplay(handlerInput)) {
+      return handlerInput.responseBuilder
+        .speak(WELCOME_MESSAGE)
+        .addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./document.json'),
+          datasources: makeDatasources(handlerInput, true)
+        })
+        .withShouldEndSession(false)
+        .getResponse()
+    } else {
+      return handlerInput.responseBuilder
+        .speak('このスキルは画面なしのデバイスには対応していません')
+        .getResponse()
+    }
   }
 }
 
@@ -26,7 +38,40 @@ const SlotRequestHandler = {
           type: 'Alexa.Presentation.APL.RenderDocument',
           version: '1.0',
           document: require('./document.json'),
-          datasources: makeDatasources()
+          datasources: makeDatasources(handlerInput, false)
+        })
+        .withShouldEndSession(false)
+        .getResponse()
+    } else {
+      return handlerInput.responseBuilder
+        .speak('このスキルは画面なしのデバイスには対応していません')
+        .getResponse()
+    }
+  }
+}
+
+const PreviousRequestHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request
+    return request.type === 'IntentRequest' && request.intent.name === 'AMAZON.PreviousIntent'
+  },
+  handle(handlerInput) {
+    if (supportDisplay(handlerInput)) {
+      const attributes = handlerInput.attributesManager.getSessionAttributes()
+      if (!attributes.previousDatasources) {
+        return handlerInput.responseBuilder
+          .speak('スロット履歴がありません。スロットを回しますか？')
+          .reprompt('スロット履歴がありません。スロットを回しますか？')
+          .getResponse()
+      }
+      
+      return handlerInput.responseBuilder
+        .speak('前回のスロット履歴はこちらです。もう一度スロットを回しますか？')
+        .addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./document.json'),
+          datasources: attributes.previousDatasources
         })
         .withShouldEndSession(false)
         .getResponse()
@@ -89,7 +134,7 @@ const ErrorHandler = {
   }
 }
 
-const WELCOME_MESSAGE = 'ありたそスロットへようこそ。スロットを回しますか？'
+const WELCOME_MESSAGE = 'ありたそスロットへようこそ。もう一度スロットを回しますか？'
 const HELP_MESSAGE = 'スロットを回して、と言ってみてください。スロットで遊ぶことができます。'
 const HELP_REPROMPT = 'ご用件はなんでしょうか？'
 
@@ -99,6 +144,7 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
     SlotRequestHandler,
+    PreviousRequestHandler,
     HelpHandler,
     ExitHandler,
     SessionEndedRequestHandler
@@ -118,7 +164,7 @@ function supportDisplay(handlerInput) {
     return hasDisplay
 }
 
-function makeDatasources() {
+function makeDatasources(handlerInput, initialSlot) {
   const sources = [
     { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon.png" },
     { url: "https://s3-ap-northeast-1.amazonaws.com/alitaso-slot/twitter_icon2.png" },
@@ -138,6 +184,15 @@ function makeDatasources() {
         sources: slotedSources
       }
     }
+  }
+
+  // セッションの保存
+  let attributes = handlerInput.attributesManager.getSessionAttributes()
+  if (initialSlot) {
+    attributes.nextDatasources = datasources
+  } else {
+    attributes.previousDatasources = attributes.nextDatasources
+    attributes.nextDatasources = datasources
   }
 
   return datasources
